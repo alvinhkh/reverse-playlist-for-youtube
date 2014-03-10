@@ -1,0 +1,59 @@
+{
+    "chrome_web_store": {
+        "description": "Chrome Web Store", 
+        "message": "Chrome Web Store"
+    }, 
+    "extension_description": {
+        "description": "description shown in Chrome Web Store, maximum 130 characters", 
+        "message": "Play YouTube playlist in reverse order"
+    }, 
+    "extension_name": {
+        "description": "do not translate this, maximum 45 characters", 
+        "message": "Reverse Playlist for YouTube™ (BETA)"
+    }, 
+    "extension_shortname": {
+        "description": "do not translate this, maximum 45 characters", 
+        "message": "Reverse Playlist for YouTube"
+    }, 
+    "script_reverse_playlist": {
+        "message": "Reverse Playlist"
+    }, 
+    "text_by": {
+        "description": "Reverse Playlist for YouTube (by) AlvinHKH", 
+        "message": "by"
+    }, 
+    "text_feedback": {
+        "description": "Encourage users leaving reviews on chrome web store", 
+        "message": "Leave some comments and rate 5 stars in Chrome Web Store, if you enjoy playing YouTube playlist in reverse order with Reverse Playlist for YouTube."
+    }, 
+    "text_support": {
+        "description": "please keep those html tags", 
+        "message": "Any issues please submit to <a id=\"support-page\" href=\"#\" target=\"_blank\">Support Page on CWS</a> or email to reverseplaylistforyoutube@alvinhkh.com (in English)"
+    }, 
+    "text_translations": {
+        "message": "Welcome translations from your language!"
+    }, 
+    "text_tweet": {
+        "description": "less than 90 characters", 
+        "message": "Reverse Playlist for YouTube, awesome extension that play playlist in reverse order."
+    }, 
+    "text_version": {
+        "description": "(Version) 1.0.0", 
+        "message": "Version"
+    }, 
+    "title_changelog": {
+        "description": "Change-log (in English)", 
+        "message": "Change-log"
+    }, 
+    "title_feedback": {
+        "description": "Give us feedback", 
+        "message": "Give us feedback ★★★★★"
+    }, 
+    "title_more_extension": {
+        "message": "Extensions you may like"
+    }, 
+    "title_share": {
+        "description": "Encourage sharing extension on social media", 
+        "message": "Share this extension with your friends so they can play YouTube playlist in reverse order like you :)"
+    }
+}

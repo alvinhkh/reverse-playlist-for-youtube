@@ -1,0 +1,36 @@
+{
+	"content_scripts": [ {
+		"css": [
+			"contentstyle.css"
+		],
+		"js": [
+			"contentscript.js"
+		],
+		"matches": [
+			"*://*.youtube.com/*",
+			"*://youtube.com/*"
+		],
+		"run_at": "document_end"
+	} ],
+	
+	"content_security_policy": "default-src 'self'; script-src 'self' https://www.paypalobjects.com https://*.google.com https://*.facebook.net https://*.facebook.com https://*.fbcdn.net https://*.twitter.com chrome-extension:// 'unsafe-eval'; img-src data: chrome-extension: https://*.gstatic.com https://*.facebook.com; style-src 'self' 'unsafe-inline'; frame-src https://*.google.com https://*.facebook.com https://facebook.com http://*.facebook.com http://*.twitter.com https://*.twitter.com chrome-extension://; object-src 'self'",
+	"web_accessible_resources": [
+		"_locales/*",
+		"options.html"
+	],
+	"options_page": "options.html",
+	"icons": {
+		"128": "icon.png"
+	},
+	
+	"default_locale": "en",
+	"permissions": [
+		"storage"
+	],
+	"manifest_version": 2,
+	
+	"name": "__MSG_extension_name__",
+	"short_name": "__MSG_extension_shortname__",
+	"description": "__MSG_extension_description__",
+	"version": "0.0.1"
+}

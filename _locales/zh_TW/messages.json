@@ -1,0 +1,52 @@
+{
+    "chrome_web_store": {
+        "description": "Chrome Web Store", 
+        "message": "Chrome 線上應用程式商店"
+    }, 
+    "extension_description": {
+        "description": "description shown in Chrome Web Store, maximum 130 characters", 
+        "message": "讓你很方便地以相反次序播放 YouTube 播放清單"
+    }, 
+    "extension_name": {
+        "description": "do not translate this, maximum 45 characters", 
+        "message": "Reverse Playlist for YouTube™ - 反向播放清單"
+    }, 
+    "script_reverse_playlist": {
+        "message": "以相反次序播放"
+    }, 
+    "text_by": {
+        "description": "Reverse Playlist for YouTube (by) AlvinHKH", 
+        "message": "by"
+    }, 
+    "text_feedback": {
+        "description": "Encourage users leaving reviews on chrome web store", 
+        "message": "如果你喜歡使用 Reverse Playlist for YouTube 以相反次序播放 YouTube 播放清單，請給我們 5 星評分和意見。"
+    }, 
+    "text_support": {
+        "description": "please keep those html tags", 
+        "message": "如果有任何問題或建議，請到 <a id=\"support-page\" href=\"#\" target=\"_blank\">CWS 的支援頁面</a> 或 電郵至 reverseplaylistforyoutube@alvinhkh.com"
+    }, 
+    "text_tweet": {
+        "description": "less than 90 characters", 
+        "message": "Reverse Playlist for YouTube，超棒的 Chrome 擴充功能，讓我一鍵以相反次序播放 YouTube 播放清單"
+    }, 
+    "text_version": {
+        "description": "(Version) 1.0.0", 
+        "message": "版本"
+    }, 
+    "title_changelog": {
+        "description": "Change-log (in English)", 
+        "message": "變更記錄（英文）"
+    }, 
+    "title_feedback": {
+        "description": "Give us feedback", 
+        "message": "向我們反饋及評分 ★★★★★"
+    }, 
+    "title_more_extension": {
+        "message": "你可能喜歡的擴充功能"
+    }, 
+    "title_share": {
+        "description": "Encourage sharing extension on social media", 
+        "message": "與朋友分享這個擴充功能，讓他們能夠像你一樣方便地以相反次序播放 YouTube 播放清單 :)"
+    }
+}
