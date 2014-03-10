@@ -4,16 +4,16 @@
  * All rights reserved.
  */
 
-#watch7-playlist-bar-reverse-button {
+#nav-reverse-playlist {
 	display: inline-block
 }
 
-#reverse-playlist-icon {
+.yt-uix-button-icon-playlist-bar-reverse {
 	width: 24px;
 	height: 24px;
 	background: no-repeat url(data:image/webp;base64,UklGRuQAAABXRUJQVlA4TNcAAAAvF8AFEG+hoG0bxvxJ7w/D/M+/2kaS2ixn8JARugJIhBhAQSCABYHAB6FDiY+OhwKDAIgNwujIaAAmIggBcBhJsqrsd3d3N+Dyzw+5jwUQ0X+Fbds2zOjuIfg0RFHCD0IEdPvkrWnb9/8kRNOa8eJ9dwHkC9FRsPzrxQLKKz2iYkrwb7e7uh2ImrZjG9FjgYQoBU54uEfwVwSuZJ7K0R4EbnFCARCe6PqRaO5rIL7dIk5Fj7iWd5erxy6Kg2jJcbftPGTrFEECDM9JeLB1QMQHIbxNEkV8GgA=);
 }
 
-.watch-radio #watch7-playlist-bar-reverse-button {
+.watch-radio #nav-reverse-playlist {
 	display: none
 }

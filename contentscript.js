@@ -98,7 +98,7 @@ ytrp = {
 		ytrp.button = null;
 		ytrp.button_container_class = null;
 		ytrp.button_class = null;
-		ytrp.button_id = 'watch7-playlist-bar-reverse-button';
+		ytrp.button_id = 'nav-reverse-playlist';
 		ytrp.playlist_tray = null;
 		ytrp.getReadyTimes = 0;
 		ytrp.lang = null;
@@ -161,9 +161,7 @@ ytrp = {
 		ytrp.lang = document.documentElement.getAttribute("lang");
 		ytrp.lang = ytrp.getCorrectLocale(ytrp.lang);
 		
-		if (document.getElementById('watch7-playlist-tray')) {
-			ytrp.playlist_tray = document.getElementById('watch7-playlist-tray');
-		} else if (document.getElementsByClassName('playlist-videos-list').length > 0) {
+		if (document.getElementsByClassName('playlist-videos-list').length > 0) {
 			ytrp.playlist_tray = document.getElementsByClassName('playlist-videos-list')[0];
 		}
 		
@@ -172,11 +170,11 @@ ytrp = {
 			return;
 		}
 		
-		ytrp.link_previous = document.getElementById('watch7-playlist-bar-prev-button') || document.getElementsByClassName('prev-playlist-list-item')[0];
-		ytrp.link_next = document.getElementById('watch7-playlist-bar-next-button') || document.getElementsByClassName('next-playlist-list-item')[0];
-		ytrp.button_container_class = document.getElementsByClassName('watch7-playlist-bar-secondary-controls')[1] || document.getElementsByClassName('playlist-nav-controls')[0];
-		ytrp.button_class = document.getElementById('watch7-playlist-bar-autoplay-button') ? document.getElementById('watch7-playlist-bar-autoplay-button').className : null || document.getElementsByClassName('toggle-autoplay')[0].className;
-		ytrp.button_shuffle = document.getElementById('watch7-playlist-bar-shuffle-button') || document.getElementsByClassName('shuffle-playlist')[0];
+		ytrp.link_previous = document.getElementsByClassName('prev-playlist-list-item')[0];
+		ytrp.link_next = document.getElementsByClassName('next-playlist-list-item')[0];
+		ytrp.button_container_class = document.getElementsByClassName('playlist-nav-controls')[0];
+		ytrp.button_class = document.getElementsByClassName('toggle-autoplay')[0].className;
+		ytrp.button_shuffle = document.getElementsByClassName('shuffle-playlist')[0];
 
 		sessionStorage['yt-playlist-id'] = ytrp.getPlaylistId();
 
@@ -251,12 +249,7 @@ ytrp = {
 		if (ytrp.isReversed() == true) {
 			clearTimeout(ytrp.recount);
 			ytrp.recount = setTimeout(function() {
-				if (document.getElementsByClassName('count').length > 0) {
-					var count = document.getElementsByClassName('count');
-					for (var i = 0; i < count.length; i++) {
-						document.getElementsByClassName('count')[i].innerText = (count[i].innerText == "▶") ? "▶" : (count.length - i);
-					}
-				} else if (document.querySelectorAll('[data-index]').length > 0) {
+				if (document.querySelectorAll('[data-index]').length > 0) {
 					var count = document.querySelectorAll('[data-index]');
 					for (var i = 0; i < count.length; i++) {
 						document.querySelectorAll('[data-index]')[i].setAttribute('data-index', (count.length - i));
@@ -283,9 +276,7 @@ ytrp = {
 		// Save current state
 		ytrp.setReverseState(ytrp.isReversed() == true);
 		// Scroll list to current playing item or top of the list
-		if (document.getElementsByClassName('playlist-bar-item-playing').length > 0) {
-			ytrp.playlist_tray.scrollTop = document.getElementsByClassName('playlist-bar-item-playing')[0].offsetTop;
-		} else if (document.getElementsByClassName('currently-playing').length > 0) {
+		if (document.getElementsByClassName('currently-playing').length > 0) {
 			ytrp.playlist_tray.scrollTop = document.getElementsByClassName('currently-playing')[0].offsetTop;
 		} else {
 			ytrp.playlist_tray.scrollTop = 0;
@@ -294,16 +285,7 @@ ytrp = {
 	
 	isReversed: function () {
 		// Return true if in reverse order
-		if (document.getElementsByClassName('count').length > 0) {
-			var count = document.getElementsByClassName('count');
-			if (count.length > 3 && (parseInt(count[0].innerText) > parseInt(count[1].innerText) || parseInt(count[0].innerText) > parseInt(count[2].innerText) || parseInt(count[1].innerText) > parseInt(count[2].innerText))) {
-				// Compare first items in playlist to avoid playing item
-				return true;
-			} else if (count.length == 2 && ( parseInt(count[1].innerText) == 1 || parseInt(count[0].innerText) == 2 )) {
-				return true;
-			}
-			return false;
-		} else if (document.querySelectorAll('[data-index]').length > 0) {
+		if (document.querySelectorAll('[data-index]').length > 0) {
 			var count = document.querySelectorAll('[data-index]');
 			if (count.length > 3 && (parseInt(count[0].getAttribute('data-index')) > parseInt(count[1].getAttribute('data-index')) || parseInt(count[0].getAttribute('data-index')) > parseInt(count[2].getAttribute('data-index')) || parseInt(count[1].getAttribute('data-index')) > parseInt(count[2].getAttribute('data-index')))) {
 				// Compare first items in playlist to avoid playing item
@@ -340,9 +322,6 @@ ytrp = {
 	},
 	
 	getPlaylistId: function () {
-		if (document.getElementById('watch7-playlist-data')) {
-			return document.getElementById('watch7-playlist-data').getAttribute('data-full-list-id');
-		}
 		if (document.getElementsByClassName('playlist-info').length > 0) {
 			return document.getElementsByClassName('playlist-info')[0].getAttribute('data-full-list-id');
 		}
