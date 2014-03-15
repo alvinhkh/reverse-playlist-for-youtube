@@ -380,16 +380,19 @@ ytrp.bodyObserver = new MutationObserver(function (mutations) {
 			if (mutation && mutation.target && isYouTube_host && isYouTube_target) {
 				if ((mutation.target.baseURI).match("watch\\?v=") != null) {
 					if (mutation.target.className.match('page-loaded') != null) {
-						if (ytrp.debug) console.log(extension_name_log, 'Initialise');
-						ytrp.initialiseVariables();
-						ytrp.setVariables();
-						ytrp.setEventListener();
-						if (ytrp.playlist_tray == null) {
-							if (ytrp.debug) console.log(extension_name_log, 'Playlist does not exist.');
-							return;
+						if (sessionStorage['yt-playlist-body-class'] == undefined || sessionStorage['yt-body-class'].match('page-loaded') == null) {
+							if (ytrp.debug) console.log(extension_name_log, 'Initialise');
+							ytrp.initialiseVariables();
+							ytrp.setVariables();
+							ytrp.setEventListener();
+							if (ytrp.playlist_tray == null) {
+								if (ytrp.debug) console.log(extension_name_log, 'Playlist does not exist.');
+								return;
+							}
+							ytrp.getReady();
 						}
-						ytrp.getReady();
 					}
+					sessionStorage['yt-playlist-body-class'] = mutation.target.className;
 				} else {
 					if (ytrp.debug) console.log(extension_name_log, 'This is not a video page');
 					ytrp.initialiseVariables();
