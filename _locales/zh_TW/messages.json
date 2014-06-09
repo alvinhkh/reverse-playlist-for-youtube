@@ -9,7 +9,7 @@
     }, 
     "extension_name": {
         "description": "do not translate this, maximum 45 characters", 
-        "message": "Reverse Playlist for YouTube™ - 反向播放清單"
+        "message": "Reverse Playlist for YouTube™ (BETA) - 反向播放清單"
     }, 
     "script_reverse_playlist": {
         "message": "以相反次序播放"
