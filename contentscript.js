@@ -197,6 +197,9 @@ ytrp = {
 		if (ytrp.button_container_class == null) return false;
 		if (ytrp.button_class == null) return false;
 		var p = ytrp.button_container_class.childNodes[ytrp.button_container_class.childNodes.length-2];
+		if (p == null) {
+			p = ytrp.button_container_class.childNodes[0];
+		}
 		var button = document.createElement('button'),
 			icon_wrapper = document.createElement('span'),
 			icon = document.createElement('img')
