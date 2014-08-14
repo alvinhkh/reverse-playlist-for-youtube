@@ -328,10 +328,17 @@ ytrp = {
 		return;
 	},
 	
+	getUrlParameters: function(s) {
+		var v = {};	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,k,e) { v[k] = e;	});	return v[s];
+	},
+	
 	getPlaylistId: function () {
-		if (document.getElementsByClassName('playlist-info').length > 0) {
-			return document.getElementsByClassName('playlist-info')[0].getAttribute('data-full-list-id');
+		if (document.getElementsByClassName('playlist-header-content').length > 0) {
+			return document.getElementsByClassName('playlist-header-content')[0].getAttribute('data-full-list-id');
+		} else if (ytrp.getUrlParameters('list')) {
+			return ytrp.getUrlParameters('list');
 		}
+		if (ytrp.debug) console.error(extension_name_log, 'Unable to get playlist ID.');
 		return "0";
 	},
 	
