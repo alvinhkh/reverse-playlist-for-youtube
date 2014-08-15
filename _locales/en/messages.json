@@ -15,6 +15,14 @@
         "description": "do not translate this, maximum 45 characters", 
         "message": "Reverse Playlist for YouTube"
     }, 
+    "message_saved": {
+        "description": "message shown after saving options",
+        "message": "Saved"
+    },
+    "option_show_changelog": {
+        "description": "Checkbox, show changelog page when user opens YouTube after updating extension",
+        "message": "Show changelog when the extension is updated"
+    },
     "script_reverse_playlist": {
         "message": "Reverse Playlist"
     }, 
@@ -26,6 +34,10 @@
         "description": "Encourage users leaving reviews on chrome web store", 
         "message": "Leave some comments and rate 5 stars in Chrome Web Store, if you enjoy playing YouTube playlist in reverse order with Reverse Playlist for YouTube."
     }, 
+    "text_full_changelog": {
+        "description": "link to change-log page",
+        "message": "For the whole change-log, Click here."
+    },
     "text_support": {
         "description": "please keep those html tags", 
         "message": "Any issues please submit to <a id=\"support-page\" href=\"#\" target=\"_blank\">Support Page on CWS</a> or email to reverseplaylistforyoutube@alvinhkh.com (in English)"
@@ -51,6 +63,10 @@
     }, 
     "title_more_extension": {
         "message": "Extensions you may like"
+    }, 
+    "title_options": {
+        "description": "Options", 
+        "message": "Options"
     }, 
     "title_share": {
         "description": "Encourage sharing extension on social media", 

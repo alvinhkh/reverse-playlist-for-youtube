@@ -11,6 +11,14 @@
         "description": "do not translate this, maximum 45 characters", 
         "message": "Reverse Playlist for YouTube™ (BETA) - 反向播放清單"
     }, 
+    "message_saved": {
+        "description": "message shown after saving options",
+        "message": "已儲存"
+    },
+    "option_show_changelog": {
+        "description": "Checkbox, show changelog page when user opens YouTube after updating extension",
+        "message": "每當擴充功能更新後，顯示變更記錄"
+    },
     "script_reverse_playlist": {
         "message": "以相反次序播放"
     }, 
@@ -22,6 +30,10 @@
         "description": "Encourage users leaving reviews on chrome web store", 
         "message": "如果你喜歡使用 Reverse Playlist for YouTube 以相反次序播放 YouTube 播放清單，請給我們 5 星評分和意見。"
     }, 
+    "text_full_changelog": {
+        "description": "link to change-log page",
+        "message": "更詳盡的變更記錄，請點擊此處。"
+    },
     "text_support": {
         "description": "please keep those html tags", 
         "message": "如果有任何問題或建議，請到 <a id=\"support-page\" href=\"#\" target=\"_blank\">CWS 的支援頁面</a> 或 電郵至 reverseplaylistforyoutube@alvinhkh.com"
@@ -44,6 +56,10 @@
     }, 
     "title_more_extension": {
         "message": "你可能喜歡的擴充功能"
+    }, 
+    "title_options": {
+        "description": "Options", 
+        "message": "選項"
     }, 
     "title_share": {
         "description": "Encourage sharing extension on social media", 

@@ -385,6 +385,29 @@ ytrp = {
 // Check whether new version is installed
 if (typeof ( chrome.runtime ) == 'object') {
 	var thisVersion = chrome.runtime.getManifest().version;
+	// Check to show changelog or not
+	try {
+		chrome.storage.onChanged.addListener(function(changes, namespace) {
+			for (key in changes) {
+				var storageChange = changes[key];
+				switch(key) {
+					case 'option_show_changelog':
+						localStorage['yt-reverseplaylist-show-changelog'] = storageChange.newValue == 'false' ? false : true;
+						break;
+				}
+			}
+		});
+		chrome.storage.sync.get(null, function(value){ 
+			localStorage['yt-reverseplaylist-show-changelog'] = value['option_show_changelog'] ? ( value['option_show_changelog'] == 'false' ? false : true ) : true;
+		});
+	} catch (e) {
+		localStorage['yt-reverseplaylist-show-changelog'] = true;
+	}
+	if (localStorage['yt-reverseplaylist-show-changelog'] == "true" && localStorage['yt-reverseplaylist-version'] && localStorage['yt-reverseplaylist-version'] != thisVersion.toString()) {
+		// check version number, if they are different, show changelog
+		var changelog_url = "http://reverseplaylistforyoutube.alvinhkh.com/changelog/updated";
+		window.open(changelog_url, "changelogWindow");
+	}
 	// save current extension version
 	localStorage['yt-reverseplaylist-version'] = thisVersion;
 }

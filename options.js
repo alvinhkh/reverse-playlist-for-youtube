@@ -8,72 +8,71 @@ to_be_translate = {
 	"title": {
 		"type": "title",
 		"i18n": "extension_name",
-		"html": false,
 	},
 	"extension-name": {
 		"type": "id",
 		"i18n": "extension_name",
-		"html": false,
 	},
 	"translations": {
 		"type": "id",
 		"i18n": "text_translations",
-		"html": false,
 	},
 	"support": {
 		"type": "id",
 		"i18n": "text_support",
 		"html": true,
 	},
+	"options-title": {
+		"type": "id",
+		"i18n": "title_options",
+	},
+	"option-show-changelog": {
+		"type": "option",
+		"i18n": "option_show_changelog",
+	},
 	"promotion-title": {
 		"type": "id",
 		"i18n": "title_more_extension",
-		"html": false,
 	},
 	"feedback-title": {
 		"type": "id",
 		"i18n": "title_feedback",
-		"html": false,
 	},
 	"feedback-text": {
 		"type": "id",
 		"i18n": "text_feedback",
-		"html": false,
 	},
 	"chrome-web-store": {
 		"type": "id",
 		"i18n": "chrome_web_store",
-		"html": false,
 	},
 	"share-title": {
 		"type": "id",
 		"i18n": "title_share",
-		"html": false,
 	},
 	"twitter": {
 		"type": "twitter",
 		"i18n": "text_tweet",
-		"html": false,
 	},
 	"changelog-title": {
 		"type": "id",
 		"i18n": "title_changelog",
-		"html": false,
+	},
+	"full-changelog": {
+		"type": "id",
+		"i18n": "text_full_changelog",
 	},
 	"extension-name-text": {
 		"type": "id",
 		"i18n": "extension_name",
-		"html": false,
 	},
 	"by-text": {
 		"type": "id",
 		"i18n": "text_by",
-		"html": false,
 	},
 	"version-text": {
 		"type": "id",
 		"i18n": "text_version",
-		"html": false,
 	},
 }
 /*
@@ -95,6 +94,11 @@ function translation(translate) {
 			_element = document.getElementById(element);
 			_element.getElementsByClassName('twitter-share-button')[0].setAttribute('data-text', message(i18n));
 			break;
+		case 'option':
+			_element = document.getElementById(element);
+			if (_element && _element.parentElement)
+			_element.parentElement.getElementsByTagName('span')[0].innerText = message(i18n);
+			break;
 		case 'id':
 		default:
 			_element = document.getElementById(element);
@@ -108,15 +112,65 @@ function translation(translate) {
 	}
 }
 
+/*
+ * Function to show save message
+ */
+function showMessage(msg) {
+	msg = msg ? msg : message('message_saved');
+	document.getElementById('message-text').innerText = msg;
+	setTimeout(function (){document.getElementById('message-text').innerHTML = "&nbsp;";}, 1000);
+}
+
+// Get Options changes from Chrome-Sync via Chrome Storage API
+try {
+	chrome.storage.onChanged.addListener(function(changes, namespace) {
+		for (key in changes) {
+			var storageChange = changes[key];
+			var newValue;
+			if (storageChange.newValue) {
+				newValue = storageChange.newValue.toString();
+			}
+			key = key.replace(/_/ig, '-');
+			if (key == 'option-show-changelog' && document.getElementById(key))
+				document.getElementById(key).checked = (newValue == 'true');
+		}
+	});
+} catch (e) {
+	console.log('ERROR: YOUR BROWSER DO NOT SUPPORT CHROME.STORAGE API');
+}
+
 window.addEventListener ('DOMContentLoaded', function() {
 	translation(to_be_translate);
 
+	// Get Options from Chrome-Sync via Chrome Storage API
+	try {
+		chrome.storage.sync.get(null, function(value){
+			sessionStorage['option_show_changelog'] = value['option_show_changelog'] ? ( value['option_show_changelog']=='false' ? 'false' : 'true' ) : 'true';
+			
+			// Reset Sync Storage
+			chrome.storage.sync.clear();
+			chrome.storage.sync.set({
+				option_show_changelog: sessionStorage['option_show_changelog']
+			}, function(){});
+		});
+	} catch (e) {
+		console.log('ERROR: YOUR BROWSER DO NOT SUPPORT CHROME.STORAGE API');
+	}
 	// Links
-	var extension_id = "phmkjpaalnpngdifcgejpakhfleamlag";
-	document.getElementById('extension-name').href = 'https://chrome.google.com/webstore/detail/'+ extension_id;
-	document.getElementById('support-page').href = 'https://chrome.google.com/webstore/support/'+ extension_id;
-	document.getElementById('chrome-web-store-reviews').href = 'https://chrome.google.com/webstore/detail/'+ extension_id + '/reviews';
+	document.getElementById('extension-name').href = 'http://reverseplaylistforyoutube.alvinhkh.com'
+	document.getElementById('support-page').href = 'http://reverseplaylistforyoutube.alvinhkh.com/support';
+	document.getElementById('author').href = 'http://www.alvinhkh.com';
+	document.getElementById('chrome-web-store-reviews').href = 'https://chrome.google.com/webstore/detail/'+ 'phmkjpaalnpngdifcgejpakhfleamlag' + '/reviews';
+	document.getElementById('full-changelog').href = 'http://reverseplaylistforyoutube.alvinhkh.com/changelog';
 
+	// Click Actions - Save Options
+	document.getElementById('option-show-changelog').addEventListener ('click', function(){
+		var id = 'option-show-changelog',
+			newValue = document.getElementById(id).checked;
+		if (!document.getElementById(id)) return false;
+		if (chrome.storage) chrome.storage.sync.set({option_show_changelog: newValue.toString()}, showMessage);
+	}, false);
+	
 	if (typeof ( chrome.runtime ) == 'object' && typeof ( chrome.runtime.getManifest ) == 'function') {
 		// Get Version Number
 		document.getElementById('version-number').innerText = chrome.runtime.getManifest().version;
