@@ -13,7 +13,7 @@
 		"run_at": "document_end"
 	} ],
 	
-	"content_security_policy": "default-src 'self'; script-src 'self' https://www.paypalobjects.com https://*.google.com https://*.facebook.net https://*.facebook.com https://*.fbcdn.net https://*.twitter.com chrome-extension:// 'unsafe-eval'; img-src data: chrome-extension: https://*.gstatic.com https://*.facebook.com; style-src 'self' 'unsafe-inline'; frame-src https://*.google.com https://*.facebook.com https://facebook.com http://*.facebook.com http://*.twitter.com https://*.twitter.com chrome-extension://; object-src 'self'",
+	"content_security_policy": "default-src 'self'; script-src 'self' https://www.paypalobjects.com https://*.google.com https://*.facebook.net https://*.facebook.com https://*.fbcdn.net https://*.twitter.com; img-src data: https://*.gstatic.com https://*.facebook.com; style-src 'self' 'unsafe-inline'; frame-src https://*.google.com https://*.facebook.com https://facebook.com http://*.facebook.com http://*.twitter.com https://*.twitter.com; object-src 'self'",
 	"web_accessible_resources": [
 		"_locales/*",
 		"options.html"
