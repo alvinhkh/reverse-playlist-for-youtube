@@ -162,7 +162,7 @@ ytrp = {
 		ytrp.lang = ytrp.getCorrectLocale(ytrp.lang);
 		
 		if (document.getElementsByClassName('playlist-videos-list').length > 0) {
-			ytrp.playlist_tray = document.getElementsByClassName('playlist-videos-list')[0];
+			ytrp.playlist_tray = document.getElementsByClassName('playlist-videos-list')[1];
 		}
 		
 		if (ytrp.playlist_tray == null) {
