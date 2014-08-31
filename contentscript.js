@@ -166,7 +166,7 @@ ytrp = {
 		
 		ytrp.fullscreen_playlist_tray = 'ytp-playlist-tray-tray';
 		if (document.getElementsByClassName('playlist-videos-list').length > 0) {
-			ytrp.playlist_tray = document.getElementsByClassName('playlist-videos-list')[0];
+			ytrp.playlist_tray = document.getElementsByClassName('playlist-videos-list')[1];
 		}
 		
 		if (ytrp.fullscreen_playlist_tray == null) {
