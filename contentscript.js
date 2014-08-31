@@ -102,6 +102,9 @@ ytrp = {
 		ytrp.playlist_tray = null;
 		ytrp.getReadyTimes = 0;
 		ytrp.lang = null;
+		ytrp.fullscreen_playlist_tray = null;
+		ytrp.fullscreen_previous = null;
+		ytrp.fullscreen_next = null;
 		ytrp.link_previous = null;
 		ytrp.link_next = null;
 		ytrp.button_shuffle = null;
@@ -113,7 +116,7 @@ ytrp = {
 	},
 
 	setReverseState: function(bool) {
-		if (ytrp.playlist_tray == undefined) {
+		if (ytrp.playlist_tray == undefined || ytrp.fullscreen_playlist_tray == undefined) {
 			// Reset reverse state if playlist not exist
 			bool = false;
 		}
@@ -161,13 +164,24 @@ ytrp = {
 		ytrp.lang = document.documentElement.getAttribute("lang");
 		ytrp.lang = ytrp.getCorrectLocale(ytrp.lang);
 		
+		ytrp.fullscreen_playlist_tray = 'ytp-playlist-tray-tray';
 		if (document.getElementsByClassName('playlist-videos-list').length > 0) {
 			ytrp.playlist_tray = document.getElementsByClassName('playlist-videos-list')[0];
 		}
 		
+		if (ytrp.fullscreen_playlist_tray == null) {
+			if (ytrp.debug) console.log(extension_name_log, 'Full-screen Playlist does not exist.');
+		}
 		if (ytrp.playlist_tray == null) {
 			if (ytrp.debug) console.log(extension_name_log, 'Playlist does not exist.');
 			return;
+		}
+		
+		if (document.getElementsByClassName('ytp-playlist-controls').length > 0) {
+			if (document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-prev').length > 0)
+			ytrp.fullscreen_previous = document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-prev')[0];
+			if (document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-next').length > 0)
+			ytrp.fullscreen_next = document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-next')[0];
 		}
 		
 		if (document.getElementsByClassName('prev-playlist-list-item').length > 0)
@@ -250,6 +264,13 @@ ytrp = {
 				button[i].addEventListener('click', ytrp.removeVideoFromPlaylistAction, false);	
 			}
 		}
+		if (ytrp.fullscreen_playlist_tray) {
+			document.getElementsByClassName('ytp-button-fullscreen-enter')[0].addEventListener('click',function(){
+				setTimeout(function() {
+					ytrp.reverseListInFullScreen();
+				}, 100);
+			}, false);
+		}
 	},
 	
 	/*
@@ -272,6 +293,7 @@ ytrp = {
 	},
 	
 	reverseList: function () {
+		// Reverse Playlist Tray
 		var list = ytrp.playlist_tray;
 		if (list == null) return false;
 		if (ytrp.link_previous == null || ytrp.link_next == null) return false;
@@ -290,6 +312,28 @@ ytrp = {
 			ytrp.playlist_tray.scrollTop = document.getElementsByClassName('currently-playing')[0].offsetTop;
 		} else {
 			ytrp.playlist_tray.scrollTop = 0;
+		}
+	},
+	reverseListInFullScreen: function () {
+		// Reverse Fullscreen Playlist Tray
+		var list = document.getElementsByClassName(ytrp.fullscreen_playlist_tray)[0];
+		if (list == null) return false;
+		if (ytrp.fullscreen_previous == null || ytrp.fullscreen_next == null) return false;
+		// check if reversed or not
+		
+		// Reverse elements' order
+		for (i = 0 ; i < list.childNodes.length; ++i) {
+			list.childNodes[i].parentNode.insertBefore(list.childNodes[i], list.childNodes[0]);
+		}
+		// Set Navigate links
+		var temp_next_control = window.getComputedStyle(ytrp.fullscreen_next, null).cssText;
+		ytrp.fullscreen_next.cssText = window.getComputedStyle(ytrp.fullscreen_previous, null).cssText;
+		ytrp.fullscreen_previous.cssText = temp_next_control;
+		// Scroll list to current playing item or top of the list
+		if (document.getElementsByClassName('ytp-playlist-tray-item-current').length > 0) {
+			document.getElementsByClassName(ytrp.fullscreen_playlist_tray)[0].scrollTop = document.getElementsByClassName('ytp-playlist-tray-item-current')[0].offsetTop;
+		} else {
+			document.getElementsByClassName(ytrp.fullscreen_playlist_tray)[0].scrollTop = 0;
 		}
 	},
 	
