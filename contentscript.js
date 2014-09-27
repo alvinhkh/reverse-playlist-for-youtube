@@ -179,9 +179,9 @@ ytrp = {
 		
 		if (document.getElementsByClassName('ytp-playlist-controls').length > 0) {
 			if (document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-prev').length > 0)
-			ytrp.fullscreen_previous = document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-prev')[0];
+			ytrp.fullscreen_previous = 'ytp-button-prev';
 			if (document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-next').length > 0)
-			ytrp.fullscreen_next = document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-next')[0];
+			ytrp.fullscreen_next = 'ytp-button-next';
 		}
 		
 		if (document.getElementsByClassName('prev-playlist-list-item').length > 0)
@@ -259,17 +259,35 @@ ytrp = {
 	setEventListener: function () {
 		if (ytrp.playlist_tray) {
 			var button = ytrp.playlist_tray.getElementsByTagName('button');
-			if (ytrp.debug) console.log(extension_name_log, 'setEventListener', button.length);
+			if (ytrp.debug) console.log(extension_name_log, 'number of videos with remove button:', button.length);
 			for (var i = 0; i < button.length; i++) {
 				button[i].addEventListener('click', ytrp.removeVideoFromPlaylistAction, false);	
 			}
 		}
 		if (ytrp.fullscreen_playlist_tray) {
+/*
 			document.getElementsByClassName('ytp-button-fullscreen-enter')[0].addEventListener('click',function(){
 				setTimeout(function() {
 					ytrp.reverseListInFullScreen();
 				}, 100);
 			}, false);
+*/
+/*
+			console.debug(document.getElementsByClassName('ytp-playlist-tray-container')[0]);
+			if (ytrp.fullscreenPlaylistObserver) ytrp.fullscreenPlaylistObserver.disconnect();
+			ytrp.fullscreenPlaylistObserver = new MutationObserver(function (mutations) {
+				mutations.forEach(function (mutation) {
+					if (mutation.attributeName && mutation.attributeName == 'class') {
+						console.debug(mutation.type, mutation, mutation.target);
+						if (mutation && mutation.target) {
+							if (mutation.target.className.match('page-loaded') != null) {
+							}
+						}
+					}
+				});
+			});
+			ytrp.fullscreenPlaylistObserver.observe(document.getElementsByClassName('ytp-playlist-tray-container')[0], { subtree: true, childList: true, characterData: true });
+*/
 		}
 	},
 	
@@ -313,22 +331,25 @@ ytrp = {
 		} else {
 			ytrp.playlist_tray.scrollTop = 0;
 		}
+		// Clear Full-screen Playlist
+		var list_fullscreen = document.getElementsByClassName(ytrp.fullscreen_playlist_tray)[0];
+		while (list_fullscreen.firstChild) {
+			list_fullscreen.removeChild(list_fullscreen.firstChild);
+		}
 	},
 	reverseListInFullScreen: function () {
 		// Reverse Fullscreen Playlist Tray
 		var list = document.getElementsByClassName(ytrp.fullscreen_playlist_tray)[0];
 		if (list == null) return false;
-		if (ytrp.fullscreen_previous == null || ytrp.fullscreen_next == null) return false;
-		// check if reversed or not
-		
+		if (document.getElementsByClassName(ytrp.fullscreen_previous).length <= 0 || document.getElementsByClassName(ytrp.fullscreen_next).length <= 0) return false;
 		// Reverse elements' order
 		for (i = 0 ; i < list.childNodes.length; ++i) {
 			list.childNodes[i].parentNode.insertBefore(list.childNodes[i], list.childNodes[0]);
 		}
 		// Set Navigate links
-		var temp_next_control = window.getComputedStyle(ytrp.fullscreen_next, null).cssText;
-		ytrp.fullscreen_next.cssText = window.getComputedStyle(ytrp.fullscreen_previous, null).cssText;
-		ytrp.fullscreen_previous.cssText = temp_next_control;
+		/*var temp_next_control = window.getComputedStyle(document.getElementsByClassName(ytrp.fullscreen_next)[0], null).cssText;
+		ytrp.fullscreen_next.cssText = window.getComputedStyle(document.getElementsByClassName(ytrp.fullscreen_previous)[0], null).cssText;
+		ytrp.fullscreen_previous.cssText = temp_next_control;*/
 		// Scroll list to current playing item or top of the list
 		if (document.getElementsByClassName('ytp-playlist-tray-item-current').length > 0) {
 			document.getElementsByClassName(ytrp.fullscreen_playlist_tray)[0].scrollTop = document.getElementsByClassName('ytp-playlist-tray-item-current')[0].offsetTop;
@@ -381,9 +402,13 @@ ytrp = {
 	
 	getPlaylistId: function () {
 		if (document.getElementsByClassName('playlist-header-content').length > 0) {
-			return document.getElementsByClassName('playlist-header-content')[0].getAttribute('data-full-list-id');
+			var id = document.getElementsByClassName('playlist-header-content')[0].getAttribute('data-full-list-id');
+			if (ytrp.debug) console.info(extension_name_log, 'Playlist ID:', id);
+			return id;
 		} else if (ytrp.getUrlParameters('list')) {
-			return ytrp.getUrlParameters('list');
+			var id = ytrp.getUrlParameters('list');
+			if (ytrp.debug) console.info(extension_name_log, 'Playlist ID:', id);
+			return id;
 		}
 		if (ytrp.debug) console.error(extension_name_log, 'Unable to get playlist ID.');
 		return "0";
