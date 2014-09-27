@@ -489,7 +489,7 @@ ytrp.bodyObserver = new MutationObserver(function (mutations) {
 			var isYouTube_host = (host.substr(host.length - 11) == 'youtube.com' && host != 'm.youtube.com');
 			var isYouTube_target = ((mutation.target.baseURI).match("youtube.com") != null);
 			if (mutation && mutation.target && isYouTube_host && isYouTube_target) {
-				if ((mutation.target.baseURI).match("watch\\?v=") != null) {
+				if ((mutation.target.baseURI).match("watch\\?") != null) {
 					if (mutation.target.className.match('page-loaded') != null) {
 						if (sessionStorage['yt-playlist-body-class'] == undefined || sessionStorage['yt-playlist-body-class'].match('page-loaded') == null) {
 							if (ytrp.debug) console.log(extension_name_log, 'Initialise');
