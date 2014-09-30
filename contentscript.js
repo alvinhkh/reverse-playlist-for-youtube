@@ -362,7 +362,7 @@ ytrp = {
 		// Return true if in reverse order
 		if (document.querySelectorAll('[data-index]').length > 0) {
 			var count = document.querySelectorAll('[data-index]');
-			if (count.length > 3 && (parseInt(count[0].getAttribute('data-index')) > parseInt(count[1].getAttribute('data-index')) || parseInt(count[0].getAttribute('data-index')) > parseInt(count[2].getAttribute('data-index')) || parseInt(count[1].getAttribute('data-index')) > parseInt(count[2].getAttribute('data-index')))) {
+			if (count.length > 2 && (parseInt(count[0].getAttribute('data-index')) > parseInt(count[1].getAttribute('data-index')) || parseInt(count[0].getAttribute('data-index')) > parseInt(count[2].getAttribute('data-index')) || parseInt(count[1].getAttribute('data-index')) > parseInt(count[2].getAttribute('data-index')))) {
 				// Compare first items in playlist to avoid playing item
 				return true;
 			} else if (count.length == 2 && ( parseInt(count[1].getAttribute('data-index')) == 1 || parseInt(count[0].getAttribute('data-index')) == 2 )) {
