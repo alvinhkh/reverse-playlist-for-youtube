@@ -6,27 +6,8 @@
  * Checkbox tick and Select arrow are from Chrome Settings CSS File
  */
 
- .radiobox, .checkbox, .selectbox {
-	margin: 0.65em 0;
-	min-height: 28px;
-}
-.radiobox {
-	line-height: 30px;
-}
-.checkbox {
-	line-height: 28px;
-}
-.selectbox {
-	line-height: 22px;
-}
 .radiobox label, .checkbox label, .selectbox label {
 	display: -webkit-inline-box
-}
-.radiobox label input ~ span, .checkbox label input ~ span {
-	-webkit-margin-start: 0.6em
-}
-.selectbox label span {
-	margin: 0 0.4ex;
 }
 select, input[type="checkbox"], input[type="radio"] {
 	-webkit-appearance: none;

@@ -140,6 +140,19 @@ try {
 }
 
 window.addEventListener ('DOMContentLoaded', function() {
+
+	if (self.location.search != '?embedded') {
+		document.body.className = document.body.className.replace(/( )?embedded/g, '');
+		var element = document.createElement("link");
+		if (typeof(element) != "undefined") {
+			element.setAttribute("rel", "stylesheet");
+			element.setAttribute("type", "text/css");
+			element.setAttribute("media", "all");
+			element.setAttribute("href", "options_input.css");
+			document.getElementsByTagName("head")[0].appendChild(element);
+		}
+	}
+
 	translation(to_be_translate);
 
 	// Get Options from Chrome-Sync via Chrome Storage API
