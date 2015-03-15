@@ -45,6 +45,7 @@ h2, h3 {
 header, footer {
 	width: 600px;
 	position: fixed;
+	overflow: visible;
 	z-index: 2
 }
 header {

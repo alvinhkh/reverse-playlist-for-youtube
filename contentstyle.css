@@ -17,3 +17,7 @@
 .watch-radio #nav-reverse-playlist {
 	display: none
 }
+
+#watch-appbar-playlist.radio-playlist .control-bar, #watch-appbar-playlist.watch-queue-nav .control-bar {
+	display: block !important;
+}
