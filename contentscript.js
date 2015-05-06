@@ -103,8 +103,8 @@ ytrp = {
 		ytrp.playlist_tray = null;
 		ytrp.getReadyTimes = 0;
 		ytrp.lang = null;
-		ytrp.link_previous = null;
-		ytrp.link_next = null;
+		ytrp.behavior_previous = null;
+		ytrp.behavior_next = null;
 		ytrp.button_shuffle = null;
 		sessionStorage['yt-playlist-id'] = '0';
 		sessionStorage['yt-playlist-reversed'] = 'false';
@@ -171,15 +171,10 @@ ytrp = {
 			return;
 		}
 		
-		if (document.getElementsByClassName('ytp-playlist-controls').length > 0) {
-			if (document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-prev').length > 0)
-			if (document.getElementsByClassName('ytp-playlist-controls')[0].getElementsByClassName('ytp-button-next').length > 0)
-		}
-		
 		if (document.getElementsByClassName('prev-playlist-list-item').length > 0)
-		ytrp.link_previous = document.getElementsByClassName('prev-playlist-list-item')[0];
+		ytrp.behavior_previous = document.getElementsByClassName('prev-playlist-list-item')[0];
 		if (document.getElementsByClassName('next-playlist-list-item').length > 0)
-		ytrp.link_next = document.getElementsByClassName('next-playlist-list-item')[0];
+		ytrp.behavior_next = document.getElementsByClassName('next-playlist-list-item')[0];
 		if (document.getElementsByClassName('playlist-nav-controls').length > 0)
 		ytrp.button_container_class = document.getElementsByClassName('playlist-nav-controls')[0];
 		if (document.getElementsByClassName('toggle-autoplay').length > 0)
@@ -218,7 +213,7 @@ ytrp = {
 		button.setAttribute('onclick', ';return false;');
 		icon_wrapper.className = 'yt-uix-button-icon-wrapper';
 		icon.setAttribute('id', 'reverse-playlist-icon');
-		icon.setAttribute('class', 'yt-uix-button-icon yt-uix-button-icon-playlist-bar-reverse');
+		icon.setAttribute('class', 'yt-uix-button-icon yt-uix-button-icon-watch-appbar-reverse-video-list yt-sprite');
 		icon.setAttribute('src','data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
 		icon_wrapper.appendChild(icon);
 		button.appendChild(icon_wrapper);
@@ -281,15 +276,15 @@ ytrp = {
 		// Reverse Playlist Tray
 		var list = ytrp.playlist_tray;
 		if (list == null) return false;
-		if (ytrp.link_previous == null || ytrp.link_next == null) return false;
+		if (ytrp.behavior_previous == null || ytrp.behavior_next == null) return false;
 		// Reverse elements' order
 		for (i = 0 ; i < list.childNodes.length; ++i) {
 			list.childNodes[i].parentNode.insertBefore(list.childNodes[i], list.childNodes[0]);
 		}
 		// Set Navigate links
-		var temp_next_link = ytrp.link_next.href;
-		ytrp.link_next.setAttribute('href', ytrp.link_previous.href);
-		ytrp.link_previous.setAttribute('href', temp_next_link);
+		var temp_next_link = ytrp.behavior_next.href;
+		ytrp.behavior_next.setAttribute('href', ytrp.behavior_previous.href);
+		ytrp.behavior_previous.setAttribute('href', temp_next_link);
 		// Save current state
 		ytrp.setReverseState(ytrp.isReversed() == true);
 		// Scroll list to current playing item or top of the list
