@@ -102,6 +102,7 @@ function translation(translate) {
 		case 'id':
 		default:
 			_element = document.getElementById(element);
+            if (_element != null)
 			if (isHtml) {
 				_element.innerHTML = message(i18n);
 			} else {

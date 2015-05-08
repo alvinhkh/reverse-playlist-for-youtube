@@ -177,12 +177,12 @@ ytrp = {
 		ytrp.behavior_next = document.getElementsByClassName('next-playlist-list-item')[0];
 		if (document.getElementsByClassName('playlist-nav-controls').length > 0)
 		ytrp.button_container_class = document.getElementsByClassName('playlist-nav-controls')[0];
-		if (document.getElementsByClassName('toggle-autoplay').length > 0)
-		ytrp.button_class = document.getElementsByClassName('toggle-autoplay')[0].className.replace(/( )?toggle-autoplay/, '');
-		else if (document.getElementsByClassName('next-playlist-list-item').length > 0)
-		ytrp.button_class = document.getElementsByClassName('next-playlist-list-item')[0].className.replace(/( )?next-playlist-list-item/, '');
 		if (document.getElementsByClassName('shuffle-playlist').length > 0)
 		ytrp.button_shuffle = document.getElementsByClassName('shuffle-playlist')[0];
+		if (ytrp.button_shuffle != null)
+		ytrp.button_class = ytrp.button_shuffle.className.replace(/( )?shuffle-playlist/, '');
+		else if (document.getElementsByClassName('toggle-loop').length > 0)
+		ytrp.button_class = document.getElementsByClassName('toggle-loop')[0].className.replace(/( )?toggle-loop/, '');
 		
 		sessionStorage['yt-playlist-id'] = ytrp.getPlaylistId();
 
@@ -203,7 +203,7 @@ ytrp = {
 		}
 		var button = document.createElement('button'),
 			icon_wrapper = document.createElement('span'),
-			icon = document.createElement('img')
+			icon = document.createElement('span')
 		button.setAttribute('title', ytrp.i18n('reverse_playlist'));
 		button.setAttribute('id', ytrp.button_id);
 		button.setAttribute('class', ytrp.button_class);
@@ -212,9 +212,7 @@ ytrp = {
 		button.setAttribute('role', 'button');
 		button.setAttribute('onclick', ';return false;');
 		icon_wrapper.className = 'yt-uix-button-icon-wrapper';
-		icon.setAttribute('id', 'reverse-playlist-icon');
 		icon.setAttribute('class', 'yt-uix-button-icon yt-uix-button-icon-watch-appbar-reverse-video-list yt-sprite');
-		icon.setAttribute('src','data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
 		icon_wrapper.appendChild(icon);
 		button.appendChild(icon_wrapper);
 		button.addEventListener ('click', ytrp.buttonAction);
@@ -418,6 +416,7 @@ if (typeof ( chrome.runtime ) == 'object') {
 	localStorage['yt-reverseplaylist-version'] = thisVersion;
 }
 
+// Uses MutationObserver to check whether page refresh using ajax
 if (ytrp.bodyObserver) ytrp.bodyObserver.disconnect();
 ytrp.bodyObserver = new MutationObserver(function (mutations) {
 	mutations.forEach(function (mutation) {
