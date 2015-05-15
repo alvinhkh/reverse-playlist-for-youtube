@@ -16,7 +16,7 @@ ytrp = {};
 
 ytrp = {
 	debug: (localStorage['yt-reverseplaylist-debug'] == 'true' ? true : false),
-	
+
 	/*
 	 * Function to get locale strings from each message.json file
 	 * Limitation: Cannot idenfity placeholder in message.json
@@ -53,7 +53,7 @@ ytrp = {
 		}
 		return return_message;
 	},
-	
+
 	getCorrectLocale: function (lang) {
 		lang = lang.replace(/-/g,'_');
 		switch (lang) {
@@ -67,7 +67,7 @@ ytrp = {
 			return lang;
 		}
 	},
-	
+
 	i18n: function (s) {
 		// Initialise i18n Variables
 		if (ytrp.i18n == undefined)
@@ -94,7 +94,7 @@ ytrp = {
 			return '';
 		}
 	},
-	
+
 	initialiseVariables: function () {
 		ytrp.button = null;
 		ytrp.button_container_class = null;
@@ -135,7 +135,7 @@ ytrp = {
 		if (ytrp.debug) console.log(extension_name_log, 'setReverseState:', sessionStorage['yt-playlist-reversed']);
 		ytrp.getStoredReverseState();
 	},
-	
+
 	removeReverseState: function (id) {
 		id = id ? id : ytrp.getPlaylistId();
 		var records = {};
@@ -144,11 +144,11 @@ ytrp = {
 		}
 		return delete records[id];
 	},
-	
+
 	getReverseState: function() {
 		return sessionStorage['yt-playlist-reversed'] && sessionStorage['yt-playlist-reversed'].toString() == 'true' ? true : false;
 	},
-	
+
 	getStoredReverseState: function() {
 		var playlist = ytrp.getPlaylistId();
 		var value = {};
@@ -157,20 +157,20 @@ ytrp = {
 		}
 		sessionStorage['yt-playlist-reversed'] = value[playlist] ? (value[playlist] != 'false') : 'false';
 	},
-	
+
 	setVariables: function () {
 		ytrp.lang = document.documentElement.getAttribute("lang");
 		ytrp.lang = ytrp.getCorrectLocale(ytrp.lang);
-		
+
 		if (document.getElementsByClassName('playlist-videos-list').length > 0) {
 			ytrp.playlist_tray = document.getElementsByClassName('playlist-videos-list')[1];
 		}
-		
+
 		if (ytrp.playlist_tray == null) {
 			if (ytrp.debug) console.log(extension_name_log, 'Playlist does not exist.');
 			return;
 		}
-		
+
 		if (document.getElementsByClassName('prev-playlist-list-item').length > 0)
 		ytrp.behavior_previous = document.getElementsByClassName('prev-playlist-list-item')[0];
 		if (document.getElementsByClassName('next-playlist-list-item').length > 0)
@@ -183,7 +183,9 @@ ytrp = {
 		ytrp.button_class = ytrp.button_shuffle.className.replace(/( )?shuffle-playlist/, '');
 		else if (document.getElementsByClassName('toggle-loop').length > 0)
 		ytrp.button_class = document.getElementsByClassName('toggle-loop')[0].className.replace(/( )?toggle-loop/, '');
-		
+		else if (document.getElementsByClassName('prev-playlist-list-item').length > 0)
+		ytrp.button_class = document.getElementsByClassName('prev-playlist-list-item')[0].className.replace(/( )?(prev-playlist-list-item|hid)/g, '');
+
 		sessionStorage['yt-playlist-id'] = ytrp.getPlaylistId();
 
 		try {
@@ -192,7 +194,7 @@ ytrp = {
 			if (ytrp.debug) console.error(extension_name_log, e.message);
 		}
 	},
-	
+
 	setButton: function () {
 		if (ytrp.button != null) return;
 		if (ytrp.button_container_class == null) return false;
@@ -226,31 +228,31 @@ ytrp = {
 		// Assign created button to variable ytrp.button
 		ytrp.button = document.getElementById(ytrp.button_id);
 	},
-	
+
 	buttonAction: function () {
 		if (ytrp.isShuffle() == true && ytrp.button_shuffle) {
 			ytrp.button_shuffle.click();
 		}
 		return ytrp.reverseList();
 	},
-	
+
 	buttonDisplay: function (b) {
 		ytrp.button.className = ytrp.button.className.replace(/( )?yt-uix-button-toggled/g, '');
 		if ((b == null && ytrp.getReverseState() == true && ytrp.isShuffle() != true) || b == true) {
 			ytrp.button.className += ' yt-uix-button-toggled';
 		}
 	},
-	
+
 	setEventListener: function () {
 		if (ytrp.playlist_tray) {
 			var button = ytrp.playlist_tray.getElementsByTagName('button');
 			if (ytrp.debug) console.log(extension_name_log, 'number of videos with remove button:', button.length);
 			for (var i = 0; i < button.length; i++) {
-				button[i].addEventListener('click', ytrp.removeVideoFromPlaylistAction, false);	
+				button[i].addEventListener('click', ytrp.removeVideoFromPlaylistAction, false);
 			}
 		}
 	},
-	
+
 	/*
 	 * Action that relabel counts in playlist
 	 */
@@ -269,7 +271,7 @@ ytrp = {
 			}, 500);
 		}
 	},
-	
+
 	reverseList: function () {
 		// Reverse Playlist Tray
 		var list = ytrp.playlist_tray;
@@ -292,7 +294,7 @@ ytrp = {
 			ytrp.playlist_tray.scrollTop = 0;
 		}
 	},
-	
+
 	isReversed: function () {
 		// Return true if in reverse order
 		if (document.querySelectorAll('[data-index]').length > 0) {
@@ -307,14 +309,14 @@ ytrp = {
 		}
 		return false;
 	},
-	
+
 	isShuffle: function () {
 		if (ytrp.button_shuffle && ytrp.button_shuffle.className.match(/yt-uix-button-toggled/g)) {
 			return true;
 		}
 		return false;
 	},
-	
+
 	ShuffleButtonAction: function (e) {
 		// autoClick: click by script or user
 		var autoClick = (e.clientX == 0 && e.clientY == 0);
@@ -330,11 +332,11 @@ ytrp = {
 		}
 		return;
 	},
-	
+
 	getUrlParameters: function(s) {
 		var v = {};	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,k,e) { v[k] = e;	});	return v[s];
 	},
-	
+
 	getPlaylistId: function () {
 		if (document.getElementsByClassName('playlist-header-content').length > 0) {
 			var id = document.getElementsByClassName('playlist-header-content')[0].getAttribute('data-full-list-id');
@@ -348,14 +350,14 @@ ytrp = {
 		if (ytrp.debug) console.error(extension_name_log, 'Unable to get playlist ID.');
 		return "0";
 	},
-	
+
 	update: function () {
 		if (ytrp.isReversed() != null && ytrp.isReversed() != ytrp.getReverseState() && ytrp.isShuffle() == false) {
 			ytrp.reverseList();
 		}
 		ytrp.buttonDisplay();
 	},
-	
+
 	getReady: function () {
 		ytrp.getReadyTimes += 1;
 		try {
@@ -401,7 +403,7 @@ if (typeof ( chrome.runtime ) == 'object') {
 				}
 			}
 		});
-		chrome.storage.sync.get(null, function(value){ 
+		chrome.storage.sync.get(null, function(value){
 			localStorage['yt-reverseplaylist-show-changelog'] = value['option_show_changelog'] ? ( value['option_show_changelog'] == 'false' ? false : true ) : true;
 		});
 	} catch (e) {
